@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import AuthRoutes from './routes/auth.route.js';
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -14,5 +15,6 @@ app.use('/health',(req,res)=>{
         staus:"Auth Service Check!!"
     });
 });
+app.use('/api/auth', AuthRoutes);
 
 export default app;
