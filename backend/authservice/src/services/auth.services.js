@@ -20,3 +20,13 @@ export const createUser = async (username, email, password, userDetails) => {
     throw error;
   }
 };
+
+export const findUserById = async (id) => {
+  try {
+    const result = await pool.query(`SELECT * FROM auth_users WHERE id = $1`, [id]);
+    return result.rows[0]; // Return the user found by ID, or undefined if not found
+  } catch (error) {
+    console.error("Error finding user by ID:", error);
+    throw error;
+  }
+};
