@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/',(req,res)=>{
     res.status(200).json({
-        staus:"Auth Service Check!!!"
+        staus:"Auth Service Check!!"
     });
 });
 
