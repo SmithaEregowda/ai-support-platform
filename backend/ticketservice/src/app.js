@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import TicketRoutes from './routes/ticket.routes.js';
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -14,5 +15,6 @@ app.use('/health',(req,res)=>{
         staus:"Ticket Service Check!!"
     });
 });
+app.use('/api/tickets', TicketRoutes);
 
 export default app;
