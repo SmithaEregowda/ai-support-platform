@@ -1,5 +1,5 @@
 import { CREATE_TICKET_QUERY, GET_TICKETS_QUERY,
-     GET_TICKET_BY_ID_QUERY, UPDATE_TICKET_QUERY } from "../queries/ticket.queries.js";
+     GET_TICKET_BY_ID_QUERY, UPDATE_TICKET_QUERY, ASSIGN_TICKET_QUERY } from "../queries/ticket.queries.js";
 import pool from "../config/db.js";
 
 export const CreateTickets = async (title, description, status, priority, userId) => {
@@ -61,6 +61,16 @@ export const DeleteTicket = async (ticketId, userId) => {
         return result.rows[0];
     } catch (error) {
         console.error("Error deleting ticket:", error);
+        throw error;
+    }
+};
+
+export const AssignTicket = async (ticketId, assignedTo) => {
+    try {
+        const result = await pool.query(ASSIGN_TICKET_QUERY, [assignedTo, ticketId]);
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error assigning ticket:", error);
         throw error;
     }
 };

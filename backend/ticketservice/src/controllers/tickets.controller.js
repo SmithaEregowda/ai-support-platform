@@ -1,4 +1,4 @@
-import { CreateTickets, GetTickets, GetTicketById, UpdateTicket} from "../services/ticket.service.js";
+import { CreateTickets, GetTickets, GetTicketById, UpdateTicket, AssignTicket} from "../services/ticket.service.js";
 
 export const CreateTicketsController = async (req, res) => {
     const { title, description, status, priority } = req.body;
@@ -160,3 +160,37 @@ export const DeleteTicketController=async (req,res)=>{
     }
 
 }
+
+export const AssignTicketController=async (req,res)=>{
+    try {
+        const ticketId = req.params.ticketId;
+        const assignedTo = req.body.assignedTo;
+
+        if (!assignedTo) {
+            return res.status(400).json({
+                status: "Bad Request",
+                error: "Assigned user ID is missing",
+            });
+        }
+        const ticket = await GetTicketById(ticketId, req.user?.userId || req.user?.id);
+
+        if (!ticket) {
+            return res.status(404).json({
+                status: "Ticket Not Found",
+                error: `No ticket found with ID ${ticketId} for the authenticated user`,
+            });
+        };
+
+        const result = await AssignTicket(ticketId, assignedTo);
+        res.status(200).json({
+            status: "Ticket assigned successfully",
+            ticket: result,
+        });
+    } catch (error) {
+        console.error("Error assigning ticket:", error);
+        res.status(500).json({
+            status: "Error assigning ticket",
+            error: error.message,
+        });
+    }
+};

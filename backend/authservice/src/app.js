@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import AuthRoutes from './routes/auth.route.js';
+import UserRoutes from './routes/users.route.js';
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -16,5 +17,6 @@ app.use('/health',(req,res)=>{
     });
 });
 app.use('/api/auth', AuthRoutes);
+app.use('/api/users', UserRoutes);
 
 export default app;
