@@ -7,13 +7,18 @@ import {
 } from "../queries/notification.queries.js";
 import pool from "../config/db.js";
 
-export const createNotification = async (userId, message, referenceId, referenceType) => {
+export const createNotification = async (userId, message, referenceId, referenceType, title) => {
   try {
+    const normalizedUserId = String(userId || "");
+    const normalizedReferenceId = String(referenceId || "");
+    const normalizedTitle = title?.trim() || "New notification";
+
     const result = await pool.query(CREATE_NOTIFICATION_QUERY, [
-      userId,
+      normalizedUserId,
+      normalizedTitle,
       message,
       false,
-      referenceId,
+      normalizedReferenceId,
       referenceType,
     ]);
     return result.rows[0];

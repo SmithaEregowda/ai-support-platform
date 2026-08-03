@@ -12,8 +12,6 @@ CREATE TABLE notifications (
 
     message TEXT NOT NULL,
 
-    type VARCHAR(30),
-
     is_read VARCHAR(20)
     DEFAULT 'false',
 

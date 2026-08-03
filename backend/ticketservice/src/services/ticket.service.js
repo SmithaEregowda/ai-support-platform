@@ -1,5 +1,11 @@
-import { CREATE_TICKET_QUERY, GET_TICKETS_QUERY,
-     GET_TICKET_BY_ID_QUERY, UPDATE_TICKET_QUERY, ASSIGN_TICKET_QUERY } from "../queries/ticket.queries.js";
+import {
+    CREATE_TICKET_QUERY,
+    GET_TICKETS_QUERY,
+    GET_TICKET_BY_ID_QUERY,
+    UPDATE_TICKET_QUERY,
+    ASSIGN_TICKET_QUERY,
+    DELETE_TICKET_QUERY,
+} from "../queries/ticket.queries.js";
 import pool from "../config/db.js";
 
 export const CreateTickets = async (title, description, status, priority, userId) => {

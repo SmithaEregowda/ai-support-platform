@@ -1,6 +1,6 @@
  export const CREATE_NOTIFICATION_QUERY = `
-    INSERT INTO notifications (user_id, message, is_read, referenceId, referenceType)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO notifications (user_id, title, message, is_read, referenceId, referenceType)
+    VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *;
 `;
 

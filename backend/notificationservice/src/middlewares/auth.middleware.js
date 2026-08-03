@@ -2,6 +2,7 @@ import jsontoken from 'jsonwebtoken';
 
 export const authMiddleware = (req, res, next) => {
     const authHeader = req.get('Authorization');
+    const internalToken = process.env.INTERNAL_SERVICE_TOKEN || 'internal-service-token';
 
     if (!authHeader) {
         return res.status(401).json({
@@ -12,11 +13,19 @@ export const authMiddleware = (req, res, next) => {
 
     const token = authHeader.split(' ')[1];
 
+
+    console.log("Authorization Header:=================>", authHeader, token);
+
     if (!token) {
         return res.status(401).json({
             status: "Not Authorized",
             error: "Token is missing",
         });
+    }
+
+    if (token === internalToken) {
+        req.user = { id: 'internal-service', service: 'ticketservice' };
+        return next();
     }
 
     try {

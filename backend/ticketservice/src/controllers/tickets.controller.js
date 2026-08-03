@@ -1,4 +1,13 @@
-import { CreateTickets, GetTickets, GetTicketById, UpdateTicket, AssignTicket} from "../services/ticket.service.js";
+import {
+    CreateTickets,
+    GetTickets,
+    GetTicketById,
+    UpdateTicket,
+    AssignTicket,
+    DeleteTicket,
+} from "../services/ticket.service.js";
+import { sendNotification } from "../clients/notifcation.js";
+import { NotificationTypes } from "../utils/constant.js";
 
 export const CreateTicketsController = async (req, res) => {
     const { title, description, status, priority } = req.body;
@@ -13,6 +22,15 @@ export const CreateTicketsController = async (req, res) => {
 
     try {
         const result = await CreateTickets(title, description, status, priority, userId);
+
+        await sendNotification({
+            referenceType: NotificationTypes.TICKET_CREATED,
+            userId: userId,
+            referenceId: result.id,
+            title: result.title,
+            message: `A new ticket has been created with ID: ${result.id} and title: ${result.title}.`,
+        });
+        console.log("Notification sent successfully for ticket creation.");
         res.status(201).json({
             status: "Ticket Created Successfully",
             ticket: result,

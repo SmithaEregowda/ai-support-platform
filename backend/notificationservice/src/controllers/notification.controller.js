@@ -4,8 +4,8 @@ from '../services/notification.service.js';
 
 export const createNotificationController = async (req, res) => {
     try {
-        const { userId, message, referenceId, referenceType } = req.body;
-        const notification = await createNotification(userId, message, referenceId, referenceType);
+        const { userId, message, referenceId, referenceType, title} = req.body;
+        const notification = await createNotification(userId, message, referenceId, referenceType, title);
         res.status(201).json(notification);
     } catch (error) {
         console.error("Error creating notification:", error);
