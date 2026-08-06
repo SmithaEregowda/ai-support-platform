@@ -30,3 +30,13 @@ export const authMiddleware = (req, res, next) => {
     });
   }
 };
+
+export const verifyToken = (token) => {
+  try {
+    const decodedToken = jsontoken.verify(token, process.env.JWT_SECRET || 'aisuportsecret');
+    console.log('Decoded Token:', decodedToken); // Log the decoded token for debugging
+    return decodedToken;
+  } catch (err) {
+    throw new Error('Invalid or expired token');
+  }
+};
